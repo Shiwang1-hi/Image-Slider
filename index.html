@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Slider</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="slider-container">
+    <h1>Image Slider</h1>
+
+    <div class="slider">
+      <img id="slide" src="https://picsum.photos/id/1011/800/400" alt="Slider Image">
+    </div>
+
+    <div class="buttons">
+      <button id="prevBtn">⬅ Prev</button>
+      <button id="nextBtn">Next ➡</button>
+    </div>
+  </div>
+
+  <script >
+
+    // Array of image URLs (you can replace these with your own)
+const images = [
+  "https://picsum.photos/id/1011/800/400",
+  "https://picsum.photos/id/1025/800/400",
+  "https://picsum.photos/id/1039/800/400",
+  "https://picsum.photos/id/1043/800/400",
+  "https://picsum.photos/id/1050/800/400"
+];
+
+let index = 0;
+const slide = document.getElementById("slide");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function showImage() {
+  slide.classList.remove("active");
+  setTimeout(() => {
+    slide.src = images[index];
+    slide.classList.add("active");
+  }, 200);
+}
+
+// Button click event handlers
+nextBtn.addEventListener("click", () => {
+  index = (index + 1) % images.length;
+  showImage();
+  resetAutoSlide(); // reset timer when user clicks
+});
+
+prevBtn.addEventListener("click", () => {
+  index = (index - 1 + images.length) % images.length;
+  showImage();
+  resetAutoSlide(); // reset timer when user clicks
+});
+
+// Auto Slide function
+let autoSlide = setInterval(() => {
+  index = (index + 1) % images.length;
+  showImage();
+}, 3000);
+
+// Reset timer when user interacts
+function resetAutoSlide() {
+  clearInterval(autoSlide);
+  autoSlide = setInterval(() => {
+    index = (index + 1) % images.length;
+    showImage();
+  }, 3000);
+}
+
+// Initial image visible
+slide.classList.add("active");
+
+  </script>
+</body>
+</html>
